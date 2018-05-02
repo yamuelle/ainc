@@ -98,13 +98,14 @@ public class NeuralNet {
         }
         double cool = result[0];
         double uncool = result[1];
-        if(cool > uncool){
+        
+        /*if(cool > uncool){
             result[0] = 1;
             result[1] = 0;
         }else {
             result[0] = 0;
             result[1] = 1;
-        }
+        }*/
         return result;
     }
 

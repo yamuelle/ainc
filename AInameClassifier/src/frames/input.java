@@ -136,8 +136,13 @@ public class input extends javax.swing.JFrame {
         double[] proc = new double[15];
         for(int i = 0 ; i < proc.length ; i++){
             char t = cNameproc[i];
-            proc[i] = ((int)t);
-            proc[i] = proc[i]/122;
+            if(((int)t)!=32){
+                proc[i] = ((int)t)-96;
+            }
+            else{
+                proc[i]=0;
+            }
+            proc[i] = proc[i]/26;
         }
         tmp = "";
         for(int i = 0 ; i < cNameproc.length ; i++){

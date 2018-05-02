@@ -28,7 +28,7 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     public void printToConsole(String p) {
-        taConsole.append(p+"\n" );
+        taConsole.append(p + "\n");
     }
 
     public void calculateCounts(NeuralNet net) {
@@ -39,19 +39,17 @@ public class MainGUI extends javax.swing.JFrame {
         tfCountWeights.setText(Integer.toString(net.weights.size()));
     }
 
- 
-    
-    public void buildNet(){
-        for(int i = 0; i < 15 ; i++){
+    public void buildNet() {
+        for (int i = 0; i < 15; i++) {
             ins.add(net.addInput());
         }
-        for(int i = 0 ; i < 6; i++){
+        for (int i = 0; i < 6; i++) {
             net.addHiddenOne();
         }
-        for(int i = 0 ; i < 6; i++){
+        for (int i = 0; i < 6; i++) {
             net.addHiddenTwo();
         }
-        for(int i = 0 ; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             net.addOutput();
         }
         net.randomizeWeights(5);
@@ -347,39 +345,45 @@ public class MainGUI extends javax.swing.JFrame {
                     //System.out.println(out.length);
                 }
                 printToConsole("");
-                        
+
                 break;
             case "randw":
-                
+
                 net.randomizeWeights(Integer.parseInt(JOptionPane.showInputDialog("Bitte maximales Gewicht eingeben")));
                 net.createFullMesh();
                 printToConsole("Weights Randomized and applied");
+                break;
+            case "printin":
+                for(InputNeuron inp : net.inputs){
+                    printToConsole(Double.toString(inp.getValue()));
+                }
+                break;
         }
     }//GEN-LAST:event_tfInputActionPerformed
 
     private void btnBuildNetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuildNetActionPerformed
-       buildNet();
+        buildNet();
         printToConsole("  !<<<Netz erstellt>>>!");
     }//GEN-LAST:event_btnBuildNetActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      new input(net).setVisible(true);
+        new input(net).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       net.randomizeWeights(5);
-       net.createFullMesh();
-       printToConsole("Weights Randomized and applied");
+        net.randomizeWeights(5);
+        net.createFullMesh();
+        printToConsole("Weights Randomized and applied");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-      double[] out = net.compute();
-                printToConsole("Outputs :");
-                for (int i = 0; i < out.length; i++) {
-                    printToConsole(Double.toString(out[i]));
-                    //System.out.println(out.length);
-                }
-                printToConsole("");
+        double[] out = net.compute();
+        printToConsole("Outputs :");
+        for (int i = 0; i < out.length; i++) {
+            printToConsole(Double.toString(out[i]));
+            //System.out.println(out.length);
+        }
+        printToConsole("");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
