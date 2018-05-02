@@ -40,8 +40,8 @@ public class MainGUI extends javax.swing.JFrame {
         //initTest();
     }
 
-    public void printToConsole(String p) {
-        taConsole.append(p + "\n");
+    public static void printToConsole(String p) {
+        taConsole.append(">>  "+p + "\n");
     }
 
     public void calculateCounts(NeuralNet net) {
@@ -111,7 +111,9 @@ public class MainGUI extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Console"));
 
         taConsole.setEditable(false);
+        taConsole.setBackground(new java.awt.Color(0, 0, 0));
         taConsole.setColumns(20);
+        taConsole.setForeground(new java.awt.Color(0, 204, 0));
         taConsole.setRows(5);
         jScrollPane1.setViewportView(taConsole);
 
@@ -279,8 +281,8 @@ public class MainGUI extends javax.swing.JFrame {
                     .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                    .addComponent(btnBuildNet, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuildNet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
@@ -536,7 +538,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea taConsole;
+    private static javax.swing.JTextArea taConsole;
     private javax.swing.JTextField tfCountInputNeurons;
     private javax.swing.JTextField tfCountWNh1;
     private javax.swing.JTextField tfCountWNh2;

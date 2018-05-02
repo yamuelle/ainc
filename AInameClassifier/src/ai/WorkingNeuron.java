@@ -5,6 +5,7 @@
  */
 package ai;
 
+import frames.MainGUI;
 import java.util.ArrayList;
 
 /**
@@ -25,6 +26,7 @@ public class WorkingNeuron extends Neuron {
             activation += c.link.getValue() * c.weight;
             //activation = 1 / (1 + Math.pow(Math.E, -activation));
             activation = Math.tanh(activation);
+            //MainGUI.printToConsole("Zwischenergebnis von:"+this.toString()+ "Value ="+Double.toString(activation));
             //System.out.println(activation);
         }
         

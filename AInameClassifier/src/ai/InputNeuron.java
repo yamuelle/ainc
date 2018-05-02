@@ -5,6 +5,8 @@
  */
 package ai;
 
+import frames.MainGUI;
+
 
 /**
  *
@@ -22,7 +24,9 @@ public class InputNeuron extends Neuron{
     
     @Override
     public double getValue(){
+        //MainGUI.printToConsole("Value abgefragt von :"+this.toString());
         return activation;
+        
     }
     
 }

@@ -98,9 +98,18 @@
             <Component class="javax.swing.JTextArea" name="taConsole">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
                 <Property name="columns" type="int" value="20"/>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="cc" red="0" type="rgb"/>
+                </Property>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -246,8 +255,8 @@
                       <Component id="jButton9" max="32767" attributes="0"/>
                       <Component id="jButton7" max="32767" attributes="0"/>
                       <Component id="jButton5" max="32767" attributes="0"/>
-                      <Component id="jButton3" pref="170" max="32767" attributes="0"/>
-                      <Component id="btnBuildNet" pref="170" max="32767" attributes="0"/>
+                      <Component id="jButton3" max="32767" attributes="0"/>
+                      <Component id="btnBuildNet" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
