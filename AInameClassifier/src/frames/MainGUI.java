@@ -16,14 +16,15 @@ import javax.swing.JOptionPane;
  */
 public class MainGUI extends javax.swing.JFrame {
 
-    ai.NeuralNet n = new ai.NeuralNet(16);
+    ai.NeuralNet net = new NeuralNet(138);
+    ArrayList<InputNeuron> ins = new ArrayList<>();
 
     /**
      * Creates new form MainGUI
      */
     public MainGUI() {
         initComponents();
-        initTest();
+        //initTest();
     }
 
     public void printToConsole(String p) {
@@ -38,43 +39,24 @@ public class MainGUI extends javax.swing.JFrame {
         tfCountWeights.setText(Integer.toString(net.weights.size()));
     }
 
-    public void initTest() {
-
-        ArrayList<InputNeuron> in = new ArrayList<>();
-
-        in.add(n.addInput());
-        in.add(n.addInput());
-        in.add(n.addInput());
-        in.add(n.addInput());
-
-        n.addHiddenOne();
-        n.addHiddenOne();
-
-        n.addHiddenTwo();
-        n.addHiddenTwo();
-
-        n.addOutput();
-        n.addOutput();
-
-        n.randomizeWeights(5);
-
-        calculateCounts(n);
-
-        n.createFullMesh();
-
-        int index = 1;
-        for (InputNeuron inp : in) {
-            inp.setInput(index++);
+ 
+    
+    public void buildNet(){
+        for(int i = 0; i < 15 ; i++){
+            ins.add(net.addInput());
         }
-        //System.out.println(n.print());
-        double[] out = n.compute();
-        printToConsole(Integer.toString(out.length));
-        printToConsole("Inputs");
-        for (InputNeuron inp : in) {
-            printToConsole(Double.toString(inp.getValue()));
+        for(int i = 0 ; i < 6; i++){
+            net.addHiddenOne();
         }
-
-       
+        for(int i = 0 ; i < 6; i++){
+            net.addHiddenTwo();
+        }
+        for(int i = 0 ; i < 2; i++){
+            net.addOutput();
+        }
+        net.randomizeWeights(5);
+        calculateCounts(net);
+        net.createFullMesh();
     }
 
     /**
@@ -102,7 +84,7 @@ public class MainGUI extends javax.swing.JFrame {
         tfCountWNout = new javax.swing.JTextField();
         tfCountWeights = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnBuildNet = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -219,13 +201,35 @@ public class MainGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton2.setText("jButton1");
+        btnBuildNet.setBackground(new java.awt.Color(226, 0, 116));
+        btnBuildNet.setText("Netz bauen");
+        btnBuildNet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuildNetActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Input");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("jButton3");
+        jButton3.setBackground(new java.awt.Color(226, 0, 116));
+        jButton3.setText("randw(5)");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("jButton4");
+        jButton4.setText("compute");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("jButton5");
 
@@ -249,11 +253,11 @@ public class MainGUI extends javax.swing.JFrame {
                     .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                    .addComponent(btnBuildNet, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -265,8 +269,8 @@ public class MainGUI extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnBuildNet, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
@@ -322,7 +326,7 @@ public class MainGUI extends javax.swing.JFrame {
         switch (in) {
             case "printw":
                 printToConsole("Weights :");
-                for (Double d : n.weights) {
+                for (Double d : net.weights) {
                     if (d >= 0) {
                         printToConsole(Double.toString(d));
                     } else {
@@ -336,7 +340,7 @@ public class MainGUI extends javax.swing.JFrame {
                 taConsole.setText("");
                 break;
             case "compute":
-                double[] out = n.compute();
+                double[] out = net.compute();
                 printToConsole("Outputs :");
                 for (int i = 0; i < out.length; i++) {
                     printToConsole(Double.toString(out[i]));
@@ -347,11 +351,36 @@ public class MainGUI extends javax.swing.JFrame {
                 break;
             case "randw":
                 
-                n.randomizeWeights(Integer.parseInt(JOptionPane.showInputDialog("Bitte maximales Gewicht eingeben")));
-                n.createFullMesh();
+                net.randomizeWeights(Integer.parseInt(JOptionPane.showInputDialog("Bitte maximales Gewicht eingeben")));
+                net.createFullMesh();
                 printToConsole("Weights Randomized and applied");
         }
     }//GEN-LAST:event_tfInputActionPerformed
+
+    private void btnBuildNetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuildNetActionPerformed
+       buildNet();
+        printToConsole("  !<<<Netz erstellt>>>!");
+    }//GEN-LAST:event_btnBuildNetActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      new input(net).setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       net.randomizeWeights(5);
+       net.createFullMesh();
+       printToConsole("Weights Randomized and applied");
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+      double[] out = net.compute();
+                printToConsole("Outputs :");
+                for (int i = 0; i < out.length; i++) {
+                    printToConsole(Double.toString(out[i]));
+                    //System.out.println(out.length);
+                }
+                printToConsole("");
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -389,9 +418,9 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuildNet;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

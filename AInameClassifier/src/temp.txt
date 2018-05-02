@@ -1,0 +1,38 @@
+   public void initTest() {
+
+        ArrayList<InputNeuron> in = new ArrayList<>();
+
+        in.add(n.addInput());
+        in.add(n.addInput());
+        in.add(n.addInput());
+        in.add(n.addInput());
+
+        n.addHiddenOne();
+        n.addHiddenOne();
+
+        n.addHiddenTwo();
+        n.addHiddenTwo();
+
+        n.addOutput();
+        n.addOutput();
+
+        n.randomizeWeights(5);
+
+        calculateCounts(n);
+
+        n.createFullMesh();
+
+        int index = 1;
+        for (InputNeuron inp : in) {
+            inp.setInput(index++);
+        }
+        //System.out.println(n.print());
+        double[] out = n.compute();
+        printToConsole(Integer.toString(out.length));
+        printToConsole("Inputs");
+        for (InputNeuron inp : in) {
+            printToConsole(Double.toString(inp.getValue()));
+        }
+
+       
+    }

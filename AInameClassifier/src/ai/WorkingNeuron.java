@@ -23,7 +23,8 @@ public class WorkingNeuron extends Neuron {
         double sum = 0;
         for(Connection c : connections){
             activation += c.link.getValue() * c.weight;
-            activation = 1 / (1 + Math.pow(Math.E, -activation));
+            //activation = 1 / (1 + Math.pow(Math.E, -activation));
+            activation = Math.tanh(activation);
             //System.out.println(activation);
         }
         
