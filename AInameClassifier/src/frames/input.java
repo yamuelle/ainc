@@ -17,12 +17,15 @@ import javax.swing.JPanel;
  */
 public class input extends javax.swing.JFrame {
     NeuralNet net ;
+    MainGUI gui;
     /**
      * Creates new form input
      */
-    public input(NeuralNet n) {
+    public input(NeuralNet n ,MainGUI g) {
         initComponents();
         net = n;
+        gui = g;
+        
 
     }
 
@@ -101,6 +104,9 @@ public class input extends javax.swing.JFrame {
         inpN.setInput(in[count]);
         count = count +1;
     }
+    gui.printToConsole("Input erfolgreich ins Netz geladen");
+    gui.printToConsole("Input : "+tfName.getText());
+    this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private double[] getProcInput(){
@@ -129,9 +135,9 @@ public class input extends javax.swing.JFrame {
         for(int i = 0 ; i < cNameproc.length ; i++){
             tmp += cNameproc[i];
         }
-        JOptionPane.showMessageDialog(this, addSpacesF);
-        JOptionPane.showMessageDialog(this,addSpacesB);
-        JOptionPane.showMessageDialog(this,tmp);
+        //JOptionPane.showMessageDialog(this, addSpacesF);
+        //JOptionPane.showMessageDialog(this,addSpacesB);
+        //JOptionPane.showMessageDialog(this,tmp);
         
         double[] proc = new double[15];
         for(int i = 0 ; i < proc.length ; i++){
@@ -148,7 +154,7 @@ public class input extends javax.swing.JFrame {
         for(int i = 0 ; i < cNameproc.length ; i++){
             tmp += proc[i] + " ";
         }
-        JOptionPane.showMessageDialog(this,tmp);
+        //JOptionPane.showMessageDialog(this,tmp);
         return proc;
     }
     /**

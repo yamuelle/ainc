@@ -7,7 +7,20 @@ package frames;
 
 import ai.InputNeuron;
 import ai.NeuralNet;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -229,11 +242,26 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("jButton5");
+        jButton5.setText("Store weights to file");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
-        jButton6.setText("jButton6");
+        jButton6.setText("Load weights from file");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
-        jButton7.setText("jButton7");
+        jButton7.setText("compute exact");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("jButton8");
 
@@ -354,9 +382,18 @@ public class MainGUI extends javax.swing.JFrame {
                 printToConsole("Weights Randomized and applied");
                 break;
             case "printin":
-                for(InputNeuron inp : net.inputs){
+                for (InputNeuron inp : net.inputs) {
                     printToConsole(Double.toString(inp.getValue()));
                 }
+                break;
+            case "computea":
+                 double[] outt = net.computeAprox();
+                printToConsole("Outputs :");
+                for (int i = 0; i < outt.length; i++) {
+                    printToConsole(Double.toString(outt[i]));
+                    //System.out.println(out.length);
+                }
+                printToConsole("");
                 break;
         }
     }//GEN-LAST:event_tfInputActionPerformed
@@ -367,7 +404,7 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuildNetActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new input(net).setVisible(true);
+        new input(net,this).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -377,7 +414,7 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        double[] out = net.compute();
+        double[] out = net.computeAprox();
         printToConsole("Outputs :");
         for (int i = 0; i < out.length; i++) {
             printToConsole(Double.toString(out[i]));
@@ -385,6 +422,64 @@ public class MainGUI extends javax.swing.JFrame {
         }
         printToConsole("");
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        JFileChooser fc = new JFileChooser();
+        fc.showSaveDialog(this);
+        File f = fc.getSelectedFile();
+
+        PrintWriter pw = null;
+        try {
+
+            pw = new PrintWriter(new FileWriter(f));
+            Iterator iter = net.weights.iterator();
+            while (iter.hasNext()) {
+                pw.println(iter.next());
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pw.close();
+        }
+        JOptionPane.showMessageDialog(this, "Datei gespeichert !");
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        JFileChooser fc = new JFileChooser();
+        fc.showOpenDialog(this);
+        File f = fc.getSelectedFile();
+        net.weights.clear();
+        printToConsole("Alte weights gelöscht");
+        String line;
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(f));
+            while((line = in.readLine())!= null){
+                double temp = Double.parseDouble(line);
+                net.weights.add(temp);
+            }
+            in.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        printToConsole("Neue weights geladen !");
+        net.createFullMesh();
+        printToConsole("Neurales Netz mit  neuen weights vollvermascht");
+        calculateCounts(net);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+         double[] out = net.compute();
+        printToConsole("Outputs :");
+        for (int i = 0; i < out.length; i++) {
+            printToConsole(Double.toString(out[i]));
+            //System.out.println(out.length);
+        }
+        printToConsole("");
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments

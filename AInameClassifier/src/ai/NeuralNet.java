@@ -89,7 +89,7 @@ public class NeuralNet {
         return newOut;
     }
 
-    public double[] compute() {
+    public double[] computeAprox() {
         double[] result = new double[outputs.size()];
         int index = 0;
         for (WorkingNeuron out : outputs) {
@@ -99,7 +99,26 @@ public class NeuralNet {
         double cool = result[0];
         double uncool = result[1];
         
-        /*if(cool > uncool){
+        if(cool > uncool && cool > 0){
+            result[0] = 1;
+            result[1] = 0;
+        }else {
+            result[0] = 0;
+            result[1] = 1;
+        }
+        return result;
+    }
+    public double[] compute(){
+        double[] result = new double[outputs.size()];
+        int index = 0;
+        for (WorkingNeuron out : outputs) {
+            result[index] = out.getValue();
+            index += 1;
+        }
+        double cool = result[0];
+        double uncool = result[1];
+        
+       /* if(cool > uncool){
             result[0] = 1;
             result[1] = 0;
         }else {
