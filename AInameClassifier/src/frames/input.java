@@ -104,8 +104,8 @@ public class input extends javax.swing.JFrame {
         inpN.setInput(in[count]);
         count = count +1;
     }
-    gui.printToConsole("Input erfolgreich ins Netz geladen");
-    gui.printToConsole("Input : "+tfName.getText());
+    MainGUI.printToConsole("Input erfolgreich ins Netz geladen");
+    MainGUI.printToConsole("Input : "+tfName.getText());
     this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
