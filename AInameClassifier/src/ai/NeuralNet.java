@@ -7,6 +7,7 @@ package ai;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -82,6 +83,13 @@ public class NeuralNet {
         hidden2.add(newH2);
         return newH2;
     }
+    public void loadToNet(double[] inArr){
+        int count = 0;
+        for(InputNeuron inpn : inputs){
+            inpn.setInput(inArr[count]);
+            count = count +1;
+        }
+    }
 
     public WorkingNeuron addOutput() {
         WorkingNeuron newOut = new WorkingNeuron();
@@ -126,6 +134,55 @@ public class NeuralNet {
             result[1] = 1;
         }*/
         return result;
+    }
+    
+    public double[] procString(String input){
+        String name = input;
+        name = name.toLowerCase();
+        char[] cName = name.toCharArray();
+        if (cName.length > 15) {
+            JOptionPane.showMessageDialog(null, "Der Name ist zu lang ");
+            
+            return null;
+        }
+        char[] cNameproc = new char[15];
+        int addSpacesF = (int) ((15 - cName.length) / 2);
+        int addSpacesB = (int) 15 - addSpacesF - cName.length;
+        for(int i = 0 ; i < addSpacesF ; i++){
+            cNameproc[i]=' ';
+        }
+        for(int i = addSpacesF ; i < addSpacesF+cName.length ; i++){
+            cNameproc[i]=cName[i-addSpacesF];
+        }
+        for(int i = 14; i >= addSpacesF+cName.length;i--){
+            cNameproc[i]=' ';
+        }
+        
+        String tmp ="";
+        for(int i = 0 ; i < cNameproc.length ; i++){
+            tmp += cNameproc[i];
+        }
+        //JOptionPane.showMessageDialog(this, addSpacesF);
+        //JOptionPane.showMessageDialog(this,addSpacesB);
+        //JOptionPane.showMessageDialog(this,tmp);
+        
+        double[] proc = new double[15];
+        for(int i = 0 ; i < proc.length ; i++){
+            char t = cNameproc[i];
+            if(((int)t)!=32){
+                proc[i] = ((int)t)-96;
+            }
+            else{
+                proc[i]=0;
+            }
+            proc[i] = proc[i]/26;
+        }
+        tmp = "";
+        for(int i = 0 ; i < cNameproc.length ; i++){
+            tmp += proc[i] + " ";
+        }
+        //JOptionPane.showMessageDialog(this,tmp);
+        return proc;
     }
 
     public String print() {
