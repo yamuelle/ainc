@@ -21,7 +21,7 @@ public class NeuralNet {
     public ArrayList<WorkingNeuron> outputs;
     public ArrayList<Double> weights;
 
-    public static int sizeOfNet;
+    public  int sizeOfNet;
 
     public NeuralNet(int totalSize) {
         sizeOfNet = totalSize;
@@ -83,11 +83,12 @@ public class NeuralNet {
         hidden2.add(newH2);
         return newH2;
     }
-    public void loadToNet(double[] inArr){
+
+    public void loadToNet(double[] inArr) {
         int count = 0;
-        for(InputNeuron inpn : inputs){
+        for (InputNeuron inpn : inputs) {
             inpn.setInput(inArr[count]);
-            count = count +1;
+            count = count + 1;
         }
     }
 
@@ -106,17 +107,18 @@ public class NeuralNet {
         }
         double cool = result[0];
         double uncool = result[1];
-        
-        if(cool > uncool && cool > 0){
+
+        if (cool > uncool && cool > 0) {
             result[0] = 1;
             result[1] = 0;
-        }else {
+        } else {
             result[0] = 0;
             result[1] = 1;
         }
         return result;
     }
-    public double[] compute(){
+
+    public double[] compute() {
         double[] result = new double[outputs.size()];
         int index = 0;
         for (WorkingNeuron out : outputs) {
@@ -125,8 +127,8 @@ public class NeuralNet {
         }
         double cool = result[0];
         double uncool = result[1];
-        
-       /* if(cool > uncool){
+
+        /* if(cool > uncool){
             result[0] = 1;
             result[1] = 0;
         }else {
@@ -135,50 +137,49 @@ public class NeuralNet {
         }*/
         return result;
     }
-    
-    public double[] procString(String input){
+
+    public double[] procString(String input) {
         String name = input;
         name = name.toLowerCase();
         char[] cName = name.toCharArray();
         if (cName.length > 15) {
             JOptionPane.showMessageDialog(null, "Der Name ist zu lang ");
-            
+
             return null;
         }
         char[] cNameproc = new char[15];
         int addSpacesF = (int) ((15 - cName.length) / 2);
         int addSpacesB = (int) 15 - addSpacesF - cName.length;
-        for(int i = 0 ; i < addSpacesF ; i++){
-            cNameproc[i]=' ';
+        for (int i = 0; i < addSpacesF; i++) {
+            cNameproc[i] = ' ';
         }
-        for(int i = addSpacesF ; i < addSpacesF+cName.length ; i++){
-            cNameproc[i]=cName[i-addSpacesF];
+        for (int i = addSpacesF; i < addSpacesF + cName.length; i++) {
+            cNameproc[i] = cName[i - addSpacesF];
         }
-        for(int i = 14; i >= addSpacesF+cName.length;i--){
-            cNameproc[i]=' ';
+        for (int i = 14; i >= addSpacesF + cName.length; i--) {
+            cNameproc[i] = ' ';
         }
-        
-        String tmp ="";
-        for(int i = 0 ; i < cNameproc.length ; i++){
+
+        String tmp = "";
+        for (int i = 0; i < cNameproc.length; i++) {
             tmp += cNameproc[i];
         }
         //JOptionPane.showMessageDialog(this, addSpacesF);
         //JOptionPane.showMessageDialog(this,addSpacesB);
         //JOptionPane.showMessageDialog(this,tmp);
-        
+
         double[] proc = new double[15];
-        for(int i = 0 ; i < proc.length ; i++){
+        for (int i = 0; i < proc.length; i++) {
             char t = cNameproc[i];
-            if(((int)t)!=32){
-                proc[i] = ((int)t)-96;
+            if (((int) t) != 32) {
+                proc[i] = ((int) t) - 96;
+            } else {
+                proc[i] = 0;
             }
-            else{
-                proc[i]=0;
-            }
-            proc[i] = proc[i]/26;
+            proc[i] = proc[i] / 26;
         }
         tmp = "";
-        for(int i = 0 ; i < cNameproc.length ; i++){
+        for (int i = 0; i < cNameproc.length; i++) {
             tmp += proc[i] + " ";
         }
         //JOptionPane.showMessageDialog(this,tmp);
@@ -202,18 +203,18 @@ public class NeuralNet {
 
         return aus;
     }
-    
-    public void randomizeWeights(int maxWeight){
-        
+
+    public void randomizeWeights(int maxWeight) {
+
         weights.clear();
-         for(int i = 0 ; i<sizeOfNet ; i++ ){
-           if(((long)(Math.random()*100)+System.currentTimeMillis())%2==0){
-               weights.add(0-(new Random().nextDouble()*maxWeight));
-           }else{
-               weights.add(new Random().nextDouble()*maxWeight);
-           }
-           
-       }
+        for (int i = 0; i < sizeOfNet; i++) {
+            if (((long) (Math.random() * 100) + System.currentTimeMillis()) % 2 == 0) {
+                weights.add(0 - (new Random().nextDouble() * maxWeight));
+            } else {
+                weights.add(new Random().nextDouble() * maxWeight);
+            }
+
+        }
     }
 
 }
